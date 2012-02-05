@@ -50,12 +50,14 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="System.Device" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -64,7 +66,17 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Noreg.cs" />
+    <Compile Include="NoregParser.cs" />
+    <Compile Include="ParaplyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestService.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="Sted.cs" />
+    <Compile Include="UseParaply.cs" />
+    <Compile Include="Utils\ResourceHelper.cs" />
+    <Compile Include="YrData.cs" />
+    <Compile Include="YrService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -87,7 +99,11 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Contents\DontUseUmbrella.png" />
+    <Content Include="Contents\noreg.txt" />
+    <Content Include="Contents\Questionmark.png" />
     <Content Include="SplashScreenImage.jpg" />
+    <Content Include="Contents\UseUmbrella.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

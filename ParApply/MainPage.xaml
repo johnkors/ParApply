@@ -13,8 +13,8 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
     <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,300,0,0">
-        <Image Name="ParaplyImage" Stretch="Fill" Width="48" Height="48" VerticalAlignment="Center" HorizontalAlignment="Center" />
+    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,100,0,100" Background="Wheat">
+        <Image Name="ParaplyImage" Source="UseUmbrella.png" Margin="0,100,0,0" Stretch="Fill" Width="300" Height="320"  />
     </StackPanel>
 
     <!--ContentPanel - place additional content here-->
