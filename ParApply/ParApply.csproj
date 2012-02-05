@@ -66,17 +66,17 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Noreg.cs" />
-    <Compile Include="NoregParser.cs" />
-    <Compile Include="ParaplyService.cs" />
+    <Compile Include="Services\Noreg.cs" />
+    <Compile Include="Services\NoregParser.cs" />
+    <Compile Include="Services\ParaplyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RestService.cs" />
-    <Compile Include="Result.cs" />
-    <Compile Include="Sted.cs" />
-    <Compile Include="UseParaply.cs" />
+    <Compile Include="Services\RestService.cs" />
+    <Compile Include="Services\Result.cs" />
+    <Compile Include="Services\Sted.cs" />
+    <Compile Include="Services\UseParaply.cs" />
     <Compile Include="Utils\ResourceHelper.cs" />
-    <Compile Include="YrData.cs" />
-    <Compile Include="YrService.cs" />
+    <Compile Include="Services\YrData.cs" />
+    <Compile Include="Services\YrService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

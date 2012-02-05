@@ -13,8 +13,9 @@ namespace ParApply
         protected void Get(Uri uri, Action<Result<IEnumerable<T>>> callback)
         {
             var webRequest = (HttpWebRequest) WebRequest.Create(uri);
+            
 
-            webRequest.BeginGetResponse(responseResult =>
+            webRequest.BeginGetResponse(delegate(IAsyncResult responseResult)
                                             {
                                                 try
                                                 {
@@ -30,8 +31,12 @@ namespace ParApply
                                                 {
                                                     callback(new Result<IEnumerable<T>>(ex));
                                                 }
-     
                                             }, webRequest);
+        }
+
+        private void OnResponse(IAsyncResult responseResult)
+        {
+            
         }
 
         public abstract IEnumerable<T> ParseXml(XmlReader reader);
