@@ -17,6 +17,7 @@ namespace ParApply
         private ParaplyService _paraplyService;
         private GeoCoordinate _myLocation;
         private static Noreg _norge;
+        private Sted _sted;
 
         // Constructor
         public MainPage()
@@ -30,27 +31,31 @@ namespace ParApply
             
             // MOCKED, Skøyen.
             _myLocation = new GeoCoordinate(59.931108, 10.685921); 
+            
             // bergen loc: 
-            _myLocation = new GeoCoordinate(60.3929932744419 , 5.32415240610052);
+            //_myLocation = new GeoCoordinate(60.3929932744419 , 5.32415240610052);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var sted = _norge.FindClosestSted(_myLocation);
-            _yrService.GetYrData(sted, UpdateUI);
+            _sted = _norge.FindClosestSted(_myLocation);
+            _yrService.GetYrData(_sted, UpdateUI);
         }
 
         private void UpdateUI(Result<IEnumerable<YrData>> yrResult)
         {
             var useParaply = _paraplyService.ShouldUseParaply(yrResult);
-            
-            // bitmaps must be instantiated on UI thread.
             System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() => SetImage(useParaply));
         }
 
-        private void SetImage(UseParaply useParaply)
+        private void SetImage(UseParaplyResult useParaply)
         {
-            switch (useParaply)
+            if(!useParaply.HasError())
+            {
+                StedInfoTextBlock.Text = string.Format("Sted: {0}, Varsel: {1}, Tidsrom: {2}-{3}: ", _sted.Navn, useParaply.YrData.SymbolName, useParaply.YrData.From, useParaply.YrData.To);    
+            }
+            
+            switch (useParaply.Result)
             {
                 case UseParaply.Unknown:
                     ParaplyImage.Source = ResourceHelper.QuestionMark();

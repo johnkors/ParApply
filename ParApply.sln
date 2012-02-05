@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParApply", "ParApply\ParApply.csproj", "{BED3D9B0-BC73-463A-9211-C34C34954DE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParApply", "ParApply.WP7\ParApply.WP7.csproj", "{BED3D9B0-BC73-463A-9211-C34C34954DE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
