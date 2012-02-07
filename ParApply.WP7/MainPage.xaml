@@ -6,18 +6,19 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="False">
     <!--TitlePanel contains the name of the application and page title-->
-    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,100,0,100" Background="#444">
+    <Border Background="{StaticResource PhoneAccentBrush}">
+    <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="20,20,20,100">
         <TextBlock Name="StedInfoTextBlock" Text="Henter sted.." TextWrapping="Wrap" Width="400" HorizontalAlignment="Left" ></TextBlock>
-        <Image Name="ParaplyImage" Source="Contents\UseUmbrella.png" Margin="0,100,0,0" Stretch="Fill" Width="300" Height="320"  />
+        <Image Name="ParaplyImage" Source="Contents\Questionmark.png" Margin="0,160,0,0" Stretch="Fill" Width="300" Height="320"  />
     </StackPanel>
-
+    </Border>
     <!--ContentPanel - place additional content here-->
 
 

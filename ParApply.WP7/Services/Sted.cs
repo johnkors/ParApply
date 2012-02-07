@@ -1,5 +1,6 @@
 using System;
 using System.Device.Location;
+using System.Globalization;
 
 namespace ParApply
 {
@@ -15,8 +16,8 @@ namespace ParApply
 
         public GeoCoordinate GetCoordinates()
         {
-            double lat = Double.Parse(Latitude);
-            double lon = Double.Parse(Longitude);
+            double lat = Double.Parse(Latitude, CultureInfo.InvariantCulture);
+            double lon = Double.Parse(Longitude, CultureInfo.InvariantCulture);
             GeoCoordinate geo;
             try
             {

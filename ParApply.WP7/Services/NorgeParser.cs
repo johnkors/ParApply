@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ParApply
 {
-    public class NoregParser
+    public class NorgeParser
     {
         public Noreg Parse(Stream noregStream)
         {

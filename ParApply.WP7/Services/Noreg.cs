@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Device.Location;
+using System.Linq;
 
 namespace ParApply
 {
@@ -24,6 +25,11 @@ namespace ParApply
             {
                 string huh = "huh";
             }
+        }
+
+        public Sted FirstSted()
+        {
+            return _stedsDictionary.Values.First();
         }
 
         public Sted FindClosestSted(GeoCoordinate myLocation)

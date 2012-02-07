@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Device.Location;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
@@ -12,35 +9,76 @@ namespace ParApply
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private GeoCoordinateWatcher _geoLocationService; // need to implement Get My Location  
+        private GeoCoordinateWatcher _coordinateWatcher;  
         private YrService _yrService;
         private ParaplyService _paraplyService;
         private GeoCoordinate _myLocation;
         private static Noreg _norge;
         private Sted _sted;
+        private BackgroundWorker _backgroundWorker;
+        private NorgeParser _norgeParser;
+        private bool _isFirstLookup = false;
+        private bool _parsingComplete;
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-            _geoLocationService = new GeoCoordinateWatcher();
-            var noregParser = new NoregParser();
-            _norge = noregParser.Parse(ResourceHelper.Noreg());
+            _coordinateWatcher = new GeoCoordinateWatcher();
+            _coordinateWatcher.PositionChanged += SaveCurrentPosition;
+            _coordinateWatcher.Start(false);
+            _backgroundWorker = new BackgroundWorker();
+            _backgroundWorker.DoWork += ParseNorgeFile;
+            _backgroundWorker.RunWorkerCompleted += SetParsingCompleted;
+            _norgeParser = new NorgeParser();
+            
             _paraplyService = new ParaplyService();
             _yrService = new YrService();
-            
-            // MOCKED, Skøyen.
-            _myLocation = new GeoCoordinate(59.931108, 10.685921); 
-            
-            // bergen loc: 
-            //_myLocation = new GeoCoordinate(60.3929932744419 , 5.32415240610052);
+             _backgroundWorker.RunWorkerAsync();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+  
+
+        private void ParseNorgeFile(object sender, DoWorkEventArgs e)
         {
-            _sted = _norge.FindClosestSted(_myLocation);
-            _yrService.GetYrData(_sted, UpdateUI);
+            using (var stream = ResourceHelper.Noreg())
+            {
+                _norge = _norgeParser.Parse(stream);
+            }
         }
+
+        private void SetParsingCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _parsingComplete = true;
+            TryUpdateData();
+        }
+
+        private void TryUpdateData()
+        {
+            if(_parsingComplete && _myLocation != null)
+            {
+                _sted = _norge.FindClosestSted(_myLocation);
+                _yrService.GetYrData(_sted, UpdateUI);
+            }
+        }
+
+
+        private void SaveCurrentPosition(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
+        {
+            _isFirstLookup = _myLocation == null;
+            _myLocation = e.Position.Location;
+
+            if (_isFirstLookup)
+            {   
+                _coordinateWatcher.Stop();
+                _coordinateWatcher.Dispose();
+            }
+            TryUpdateData();
+        }
+
+   
+
+
 
         private void UpdateUI(Result<IEnumerable<YrData>> yrResult)
         {
@@ -52,7 +90,7 @@ namespace ParApply
         {
             if(!useParaply.HasError())
             {
-                StedInfoTextBlock.Text = string.Format("Sted: {0}, Varsel: {1}, Tidsrom: {2}-{3}: ", _sted.Navn, useParaply.YrData.SymbolName, useParaply.YrData.From, useParaply.YrData.To);    
+                StedInfoTextBlock.Text = string.Format("{0}, {1}, {2} ", _sted.Navn, useParaply.YrData.SymbolName, useParaply.YrData.GetPeriode());    
             }
             
             switch (useParaply.Result)

@@ -18,17 +18,18 @@ namespace ParApply
             var xml = XDocument.Load(reader);
 
             var twoWeeksWorthOfYrData = from weatherdata in xml.Elements("weatherdata")
-                   from forecast in weatherdata.Elements("forecast")
-                   from tabular in forecast.Elements("tabular")
-                   from time in tabular.Elements("time")
-                   select new YrData()
-                              {
-                                  From = time.Attribute("from").Value,
-                                  To = time.Attribute("to").Value,
-                                  Period = time.Attribute("period").Value,
-                                  SymbolName = time.Elements("symbol").First().Attribute("name").Value
-                              };
+                                        from forecast in weatherdata.Elements("forecast")
+                                        from tabular in forecast.Elements("tabular")
+                                        from time in tabular.Elements("time")
+                                        select new YrData()
+                                                   {
+                                                       From = time.Attribute("from").Value,
+                                                       To = time.Attribute("to").Value,
+                                                       Period = time.Attribute("period").Value,
+                                                       SymbolName = time.Elements("symbol").First().Attribute("name").Value
+                                                   };
             return twoWeeksWorthOfYrData.ToList();
         }
+
     }
 }
