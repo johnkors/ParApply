@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace ParApply
+namespace ParApply.Business
 {
     public class YrService : RestService<YrData>
     {
@@ -28,7 +28,7 @@ namespace ParApply
                                                        Period = time.Attribute("period").Value,
                                                        SymbolName = time.Elements("symbol").First().Attribute("name").Value
                                                    };
-            return twoWeeksWorthOfYrData.ToList();
+            return Enumerable.ToList(twoWeeksWorthOfYrData);
         }
 
     }
