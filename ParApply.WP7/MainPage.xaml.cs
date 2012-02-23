@@ -32,6 +32,8 @@ namespace ParApply
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.DoWork += ParseNorgeFile;
             _backgroundWorker.RunWorkerCompleted += SetParsingCompleted;
+            
+            // Stop dreaming about IoC-containers!
             _norgeParser = new StedParser();
             _norge = new Noreg();
             _paraplyService = new ParaplyService();
@@ -63,13 +65,10 @@ namespace ParApply
         {
             if(_parsingComplete && _myLocation != null)
             {
-
-                _myLocation = new GeoCoordinate(59.923861, 10.7579014);
                 _sted = _norge.FindClosestSted(_myLocation);
                 _yrService.GetYrData(_sted, UpdateUI);
             }
         }
-
 
         private void SaveCurrentPosition(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
