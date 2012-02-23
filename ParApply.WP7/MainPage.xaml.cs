@@ -32,10 +32,13 @@ namespace ParApply
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.DoWork += ParseNorgeFile;
             _backgroundWorker.RunWorkerCompleted += SetParsingCompleted;
+            
+            // Stop dreaming about IoC-containers!
             _norgeParser = new StedParser();
             _norge = new Noreg();
             _paraplyService = new ParaplyService();
-            _yrService = new YrService();
+            var webRequestFactory = new WebRequestFactory();
+            _yrService = new YrService(webRequestFactory);
              _backgroundWorker.RunWorkerAsync();
         }
 

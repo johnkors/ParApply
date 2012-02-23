@@ -9,10 +9,16 @@ namespace ParApply.Business
 {
     public abstract class RestService<T> where T : class
     {
+        private readonly IWebRequestFactory _webRequestFactory;
+
+        public RestService(IWebRequestFactory webRequestFactory)
+        {
+            _webRequestFactory = webRequestFactory;
+        }
 
         protected void Get(Uri uri, Action<Result<IEnumerable<T>>> callback)
         {
-            var webRequest = (HttpWebRequest) WebRequest.Create(uri);
+            var webRequest = _webRequestFactory.CreateHttpWebRequest(uri); 
             
 
             webRequest.BeginGetResponse(delegate(IAsyncResult responseResult)
