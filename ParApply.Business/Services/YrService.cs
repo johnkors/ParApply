@@ -8,10 +8,6 @@ namespace ParApply.Business
 {
     public class YrService : RestService<YrData>
     {
-        public YrService(IWebRequestFactory webRequestFactory) : base(webRequestFactory)
-        {
-        }
-
         public void GetYrData(Sted sted, Action<Result<IEnumerable<YrData>>> OnYrDataFetched)
         {
             Get(sted.YrUrl, OnYrDataFetched);

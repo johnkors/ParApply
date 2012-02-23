@@ -51,7 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\IWebRequestFactory.cs" />
-    <Compile Include="Services\WebRequestFactory.cs" />
     <Compile Include="StedParser.cs" />
     <Compile Include="Services\ParaplyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

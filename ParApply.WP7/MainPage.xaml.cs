@@ -37,8 +37,7 @@ namespace ParApply
             _norgeParser = new StedParser();
             _norge = new Noreg();
             _paraplyService = new ParaplyService();
-            var webRequestFactory = new WebRequestFactory();
-            _yrService = new YrService(webRequestFactory);
+            _yrService = new YrService();
              _backgroundWorker.RunWorkerAsync();
         }
 
@@ -66,13 +65,10 @@ namespace ParApply
         {
             if(_parsingComplete && _myLocation != null)
             {
-
-                _myLocation = new GeoCoordinate(59.923861, 10.7579014);
                 _sted = _norge.FindClosestSted(_myLocation);
                 _yrService.GetYrData(_sted, UpdateUI);
             }
         }
-
 
         private void SaveCurrentPosition(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
