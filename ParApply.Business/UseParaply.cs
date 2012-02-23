@@ -1,4 +1,4 @@
-namespace ParApply
+namespace ParApply.Business
 {
     public enum UseParaply
     {

@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Device.Location;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
+using ParApply.Business;
+using ParApply.Services;
 
 namespace ParApply
 {
@@ -16,7 +18,7 @@ namespace ParApply
         private static Noreg _norge;
         private Sted _sted;
         private BackgroundWorker _backgroundWorker;
-        private NorgeParser _norgeParser;
+        private StedParser _norgeParser;
         private bool _isFirstLookup = false;
         private bool _parsingComplete;
 
@@ -30,8 +32,8 @@ namespace ParApply
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.DoWork += ParseNorgeFile;
             _backgroundWorker.RunWorkerCompleted += SetParsingCompleted;
-            _norgeParser = new NorgeParser();
-            
+            _norgeParser = new StedParser();
+            _norge = new Noreg();
             _paraplyService = new ParaplyService();
             _yrService = new YrService();
              _backgroundWorker.RunWorkerAsync();
@@ -43,7 +45,11 @@ namespace ParApply
         {
             using (var stream = ResourceHelper.Noreg())
             {
-                _norge = _norgeParser.Parse(stream);
+                var steder =  _norgeParser.Parse(stream);
+                foreach (var sted in steder)
+                {
+                    _norge.AddSted(sted);
+                }
             }
         }
 
@@ -57,6 +63,8 @@ namespace ParApply
         {
             if(_parsingComplete && _myLocation != null)
             {
+
+                _myLocation = new GeoCoordinate(59.923861, 10.7579014);
                 _sted = _norge.FindClosestSted(_myLocation);
                 _yrService.GetYrData(_sted, UpdateUI);
             }

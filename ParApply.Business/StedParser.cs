@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
-namespace ParApply
+namespace ParApply.Business
 {
-    public class NorgeParser
+    public class StedParser
     {
-        public Noreg Parse(Stream noregStream)
+        public IEnumerable<Sted> Parse(Stream noregStream)
         {
-            var norge = new Noreg();
+            var steder = new List<Sted>();
             char delimiter = '\t';
             using (StreamReader sr = new StreamReader(noregStream))
             {
@@ -27,10 +29,10 @@ namespace ParApply
                                        Longitude = longitude,
                                        YrUrl = new Uri(yrUrl)
                                    };
-                    norge.AddSted(sted);
+                    steder.Add(sted);
                 }
             }
-            return norge;
+            return steder;
         }
     }
 }

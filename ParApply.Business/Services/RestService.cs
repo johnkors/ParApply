@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Xml;
 
-namespace ParApply
+namespace ParApply.Business
 {
     public abstract class RestService<T> where T : class
     {
@@ -34,17 +34,11 @@ namespace ParApply
                                             }, webRequest);
         }
 
-        private void OnResponse(IAsyncResult responseResult)
-        {
-            
-        }
-
         public abstract IEnumerable<T> ParseXml(XmlReader reader);
 
         private IEnumerable<T> ParseResult(WebResponse response)
-        {                        
-            var encoding = Encoding.GetEncoding("iso-8859-1");            
-            using (var sr = new StreamReader(response.GetResponseStream(), encoding))
+        {                                   
+            using (var sr = new StreamReader(response.GetResponseStream()))
             using (var xmlReader = XmlReader.Create(sr))
             {
                 return ParseXml(xmlReader);

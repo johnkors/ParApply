@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ParApply
+namespace ParApply.Business
 {
-    internal class ParaplyService
+    public class ParaplyService
     {
         public UseParaplyResult ShouldUseParaply(Result<IEnumerable<YrData>> yrResult)
         {
@@ -12,20 +13,10 @@ namespace ParApply
             {
                 var yrData = yrResult.Value.First();
                 useParaplyResult.YrData = yrData;
-                useParaplyResult.Result = yrData.SymbolName.Contains("regn", StringComparison.OrdinalIgnoreCase) ? UseParaply.Yes : UseParaply.No;
+                useParaplyResult.Result = yrData.SymbolName.Contains("regn", StringComparison.InvariantCultureIgnoreCase) ? UseParaply.Yes : UseParaply.No;
                 return useParaplyResult;
             }
             return useParaplyResult;
         }
-    }
-
-    internal class UseParaplyResult
-    {
-        public bool HasError()
-        {
-            return YrData == null;
-        }
-        public YrData YrData { get; set; }
-        public UseParaply Result { get; set; }
     }
 }

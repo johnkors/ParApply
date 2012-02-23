@@ -1,6 +1,6 @@
 using System;
 
-namespace ParApply
+namespace ParApply.Business
 {
     public class Result<T>
     {

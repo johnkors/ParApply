@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Device.Location;
 using System.Linq;
+using ParApply.Business;
 
-namespace ParApply
+namespace ParApply.Services
 {
     public class Noreg
     {
@@ -16,7 +17,7 @@ namespace ParApply
 
         public void AddSted(Sted sted)
         {
-            var geo = sted.GetCoordinates();
+            var geo = sted.ToGeoCoordinate();
             if (!_stedsDictionary.ContainsKey(geo))
             {
                 _stedsDictionary.Add(geo, sted);

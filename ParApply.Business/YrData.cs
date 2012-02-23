@@ -1,7 +1,6 @@
 using System;
-using System.Xml.Linq;
 
-namespace ParApply
+namespace ParApply.Business
 {
     public class YrData
     {
