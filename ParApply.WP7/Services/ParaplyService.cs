@@ -12,7 +12,7 @@ namespace ParApply
             {
                 var yrData = yrResult.Value.First();
                 useParaplyResult.YrData = yrData;
-                useParaplyResult.Result = yrData.SymbolName.Contains("regn") ? UseParaply.Yes : UseParaply.No;
+                useParaplyResult.Result = yrData.SymbolName.Contains("regn", StringComparison.OrdinalIgnoreCase) ? UseParaply.Yes : UseParaply.No;
                 return useParaplyResult;
             }
             return useParaplyResult;
